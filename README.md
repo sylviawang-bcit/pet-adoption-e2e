@@ -1,5 +1,7 @@
 # Second-Look Pet Adoption: E2E Tests
 
+[![E2E tests](https://github.com/sylviawang-bcit/pet-adoption-e2e/actions/workflows/e2e.yml/badge.svg)](https://github.com/sylviawang-bcit/pet-adoption-e2e/actions/workflows/e2e.yml)
+
 ## What this is
 
 The Flask app in this repo is "Second-Look Pet Adoption", a team project from
@@ -110,7 +112,7 @@ done. If port 5001 still answers after that, check for a leftover server with
 5. Runs `pytest tests/e2e`.
 6. If the job fails, uploads the server log as the `server-log` artifact.
 
-<!-- TODO: confirm the first CI run passed with 5 xfailed, then add a status badge. -->
+The CI run passes with `5 xfailed` in the "Run E2E tests" step.
 
 ## Other findings (not issues yet)
 
