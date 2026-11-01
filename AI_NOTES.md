@@ -68,3 +68,17 @@ For each step: what I asked, what the AI got wrong, how I found it, and the fix.
   enough: the `<form>` has no method, so it would send GET /Forms?name=...
   I added this as a comment on issue #1.
 - Result: full suite 3 xfailed with the app running.
+
+## 7. Issue #4 test: Contact must reject an empty name (Oct 31)
+
+- The real bug and a setup problem could both raise `AssertionError`, so `xfail`
+  could not tell them apart. I asked Claude Code how to separate them.
+- It defined its own exception `EmptyNameAccepted` and used
+  `raises=EmptyNameAccepted`. It is raised only after a real `POST /contact`
+  response, when the status is not 400 or "Message Sent!" appears.
+- It tested 5 cases on scratch copies, including a "half fix" (400, but the
+  success message still shows), which still counts as the bug.
+- Following that case, I read `contact.html`: the frontend only checks
+  `data.status` and shows nothing on errors. A server-only fix would leave the
+  user with no feedback. I added this as a comment on issue #4.
+- Result: full suite 4 xfailed with the app running.
