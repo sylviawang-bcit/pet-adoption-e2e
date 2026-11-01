@@ -98,3 +98,21 @@ For each step: what I asked, what the AI got wrong, how I found it, and the fix.
   a fix. Tests use the live database, so CI should start from a fresh seeded
   database each run.
 - Result: full suite 5 xfailed with the app running.
+
+## 9. README: a false finding (Oct 31)
+
+- Claude Code wrote that the home page has no limit and shows every pet.
+- Wrong: `index()` has `.limit(1)` on the next line, so it shows one random pet.
+  Its search output showed only the `fn.Random()` line, and it did not open the
+  whole function to check.
+- How I found it: `grep -n -A 20 "def index" web/api/routes.py | grep limit`
+  showed `.limit(1)`.
+- Fix: removed the finding, and added a note that no test should depend on
+  which pet is featured.
+- Lesson: "I checked the code" from the AI still needs a second look,
+  especially when it only read search results.
+
+## 10. CI failed in cleanup, not in tests.
+
+- The workflow started Flask in the background with uv run and never stopped it.
+- In the post-job step, setup-uv waited 300s for the uv cache lock and failed. Same kind of problem as the leftover local server in note 5.
