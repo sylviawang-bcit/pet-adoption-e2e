@@ -82,3 +82,19 @@ For each step: what I asked, what the AI got wrong, how I found it, and the fix.
   `data.status` and shows nothing on errors. A server-only fix would leave the
   user with no feedback. I added this as a comment on issue #4.
 - Result: full suite 4 xfailed with the app running.
+
+## 8. Issue #3 test: invalid size must not crash Add Pet (Oct 31)
+
+- The test logs in as the seeded admin first, so it still works after issue #2
+  adds login protection. A failed login raises `AssertionError` and is not hidden.
+- Custom exception `InvalidSizeNotHandled` is raised only after the real
+  `POST /add_pet` response and a check of `/pet_info`.
+- Claude Code found two traps: `add_pet` returns early (no user, or age not a
+  number) before checking size, and the "Size" label is always on the page, so
+  the word "size" alone does not prove there is an error message.
+- It tested 6 cases on scratch copies (real app, wrong password, broken selector,
+  simulated fix, form never posts, half fix).
+- Limit it reported: the "pet was not saved" check was never really run against
+  a fix. Tests use the live database, so CI should start from a fresh seeded
+  database each run.
+- Result: full suite 5 xfailed with the app running.
