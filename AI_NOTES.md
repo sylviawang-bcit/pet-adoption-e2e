@@ -52,6 +52,7 @@ For each step: what I asked, what the AI got wrong, how I found it, and the fix.
   then the health check worked.
 
 ## 6. Issue #1 test: Forms must send a POST request (Oct 31)
+
 - Asked Claude Code for a test that checks the real behavior: submitting /Forms
   must send a POST request. Checking the alert text would not catch the bug,
   because the alert itself is the bug.
@@ -64,6 +65,6 @@ For each step: what I asked, what the AI got wrong, how I found it, and the fix.
 - It tested 3 cases on scratch copies: current app -> xfail; misspelled
   selector -> real failure; simulated fix -> strict XPASS failure.
 - While simulating the fix, it found that removing preventDefault() is not
-  enough: the <form> has no method, so it would send GET /Forms?name=...
+  enough: the `<form>` has no method, so it would send GET /Forms?name=...
   I added this as a comment on issue #1.
 - Result: full suite 3 xfailed with the app running.
