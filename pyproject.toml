@@ -1,0 +1,13 @@
+[project]
+name = "agile-term-project"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.14"
+dependencies = [
+    "flask>=3.1.3",
+    "peewee>=4.0.5",
+    "flask-login>=0.6.3",
+    "flask-wtf>=1.2.1",
+    "pytest>=9.0.3",
+]

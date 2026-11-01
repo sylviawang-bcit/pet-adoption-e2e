@@ -1,0 +1,118 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Adoption Form - Second-Look Adoption</title>
+
+    <!-- Google Fonts -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Amatic+SC:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- Main CSS -->
+    <link
+      href="{{ url_for('static', filename='styles/styles.css') }}"
+      rel="stylesheet"
+    />
+  </head>
+
+  <body>
+    <!-- NAVBAR -->
+    <header class="navbar">
+      <div class="logo">
+        <a href="{{ url_for('home.index') }}">Second-Look Adoptions</a>
+      </div>
+
+      <nav class="nav-links">
+        <a href="{{ url_for('home.index') }}">Home</a>
+        <a href="{{ url_for('home.gallery') }}">Gallery</a>
+        <a href="{{ url_for('home.adopt') }}">Adopt</a>
+      </nav>
+    </header>
+
+    <!-- MAIN -->
+    <main>
+      <!-- TITLE -->
+      <section class="content-section">
+        <h1>Add a pet</h1>
+        <p>Helpful text Helpful text Helpful text</p>
+      </section>
+
+      <hr class="divider" />
+      
+      {% with messages = get_flashed_messages() %}
+      {% if messages %}
+      <ul>
+          {%for message in messages%}
+          <li>{{message}}</li>
+          {%endfor%}
+      </ul>
+      <hr class="divider" />
+      {%endif%}
+      {%endwith%}
+
+      <!-- FORM -->
+      <!-- Probably should change action to the adoption provider's page once implemented -->
+      <!-- Don't forget to move or remove the jinja message handling above -->
+      <section class="content-section">
+        <div class="form-card">
+          <!-- for (Flask/Supabase） -->
+          <form method="POST" autocomplete="off" action="{{ url_for('home.add_pet') }}">
+            <label>Name</label>
+            <input type="text" name="name" required />
+
+            <label>Species</label>
+            <input type="text" name="species" required />
+
+            <label>Breed</label>
+            <input type="text" name="breed" required />            
+
+            <label>Gender</label>
+            <select name="gender" required>
+              <option value="">Select one</option>
+              <option value="female">Female</option>
+              <option value="male">Male</option>
+            </select>
+
+            <label>Age</label>
+            <input type="number" name="age" step="1" required />   
+
+            <label>Size</label>
+            <select name="size" required>
+              <option value="">Select one</option>
+              <option value="small">Small</option>
+              <option value="medium">Medium</option>
+              <option value="large">Large</option>
+            </select>
+
+            <label>Color</label>
+            <input type="text" name="color" required /> 
+
+            <label>Are they house trained?</label>
+            <select name="house_trained" required>
+              <option value="">Select one</option>
+              <option value="House trained">Yes</option>
+              <option value="Not house trained">No</option>
+            </select>
+
+            <label>Description</label>
+            <textarea name="description" rows="5" required></textarea>
+
+            <label>Image URL</label>
+            <input type="text" name="url" required /> 
+
+            <button type="submit" class="btn">Submit</button>
+          </form>
+        </div>
+      </section>
+    </main>
+
+    <!-- FOOTER -->
+    <footer>
+      <p>&copy; 2026 Second-Look Pet Adoption</p>
+    </footer>
+
+  </body>
+</html>

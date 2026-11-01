@@ -1,0 +1,314 @@
+/* General Styles */
+body {
+  margin: 0;
+  padding: 0;
+  font-family: "Amatic SC", cursive;
+  background-color: white;
+  color: #333;
+  text-align: center;
+}
+
+h1 {
+  font-size: 4rem;
+  color: #20b2aa; /* Darker aquamarine for readability */
+}
+
+h2 {
+  font-size: 3rem;
+  color: #458b74;
+}
+
+/* Navbar */
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 50px;
+  background-color: #7fffd4; /* Aquamarine */
+}
+
+.logo a {
+  font-size: 2.5rem;
+  font-weight: bold;
+  text-decoration: none;
+  color: white;
+}
+
+.nav-links a {
+  margin-left: 20px;
+  text-decoration: none;
+  color: white;
+  font-size: 1.8rem;
+  transition: color 0.3s;
+}
+
+.nav-links a:hover {
+  color: #20b2aa;
+}
+
+/* Featured Pets Section */
+.hero {
+  padding: 50px 20px;
+  background: linear-gradient(to bottom, #7fffd4, white);
+}
+
+.featured-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 40px;
+  margin-top: 30px;
+}
+
+.pet-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  transition: transform 0.3s ease;
+}
+
+/* The Circle Cards */
+.circle-image {
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  background-size: cover;
+  background-position: center;
+  border: 8px solid white;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+.pet-name {
+  margin-bottom: 10px;
+  font-size: 2.2rem;
+}
+
+/* "o O o" Effect: Target the middle card */
+.featured-container .pet-card:nth-child(2) {
+  transform: scale(1.3); /* Makes the center card larger */
+  z-index: 2;
+}
+
+.featured-container .pet-card:nth-child(2) .circle-image {
+  border-color: #7fffd4;
+}
+
+/* Content Sections */
+
+.divider {
+  width: 50%;
+  border: 1px solid #7fffd4;
+  margin: 40px auto;
+}
+
+footer {
+  padding: 30px;
+  font-size: 1.5rem;
+  background-color: #f9f9f9;
+}
+
+/* Gallery Layout */
+.gallery-wrapper {
+  padding: 40px 5%;
+  background-color: white;
+}
+
+.gallery-title {
+  font-size: 4rem;
+  color: #20b2aa;
+  margin-bottom: 40px;
+}
+
+.gallery-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: center;
+}
+
+/* Individual Card Styling */
+.gallery-card {
+  position: relative;
+  height: 400px;
+  flex: 0 1 calc(25% - 20px); /* 4 cards wide on desktop */
+  display: flex;
+  border-radius: 20px;
+  overflow: hidden;
+  background: #f9f9f9;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  transition: flex 0.6s cubic-bezier(0.25, 1, 0.5, 1); /* Graceful expansion */
+  cursor: pointer;
+}
+
+/* Picture side of the card */
+.card-image {
+  min-width: 100%;
+  height: 100%;
+  background-size: cover;
+  background-position: center;
+  position: relative;
+  transition: min-width 0.6s ease;
+}
+
+.name-overlay {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  background: linear-gradient(transparent, rgba(0, 0, 0, 0.6));
+  padding: 20px 0;
+}
+
+.name-overlay h2 {
+  color: white; /* Name in white to keep theme */
+  margin: 0;
+  font-size: 2.5rem;
+}
+
+/* Expansion Details (Hidden by default) */
+.card-details {
+  flex: 0;
+  opacity: 0;
+  display: flex;
+  flex-direction: column;
+  background: white;
+  transition:
+    opacity 0.4s ease,
+    flex 0.6s ease;
+  overflow: hidden;
+}
+
+.details-header {
+  background: linear-gradient(
+    to bottom,
+    #7fffd4,
+    white
+  ); /* Aquamarine to white fade */
+  padding: 15px;
+}
+
+.details-header h3 {
+  margin: 0;
+  font-size: 2rem;
+  color: #20b2aa;
+}
+
+.details-body {
+  padding: 20px;
+  color: black; /* Description in black */
+  text-align: left;
+  font-size: 1.4rem;
+}
+
+/* HOVER EFFECT */
+.gallery-card:hover {
+  flex: 0 1 calc(50% - 20px) !important;
+}
+
+.gallery-container:hover .gallery-card:not(:hover) {
+  flex: 0 1 calc(16.66% - 20px); /* Shrinks others to make room */
+}
+
+.gallery-card:hover .card-image {
+  min-width: 50%; /* Image shrinks to make room for text */
+}
+
+.gallery-card:hover .card-details {
+  flex: 1;
+  opacity: 1;
+}
+
+/* RESPONSIVE: Mobile Width (Phone) */
+@media (max-width: 768px) {
+  .gallery-card {
+    flex: 0 1 calc(50% - 20px); /* 2 cards wide on mobile */
+  }
+
+  .gallery-card:hover {
+    flex: 0 1 calc(50% - 20px) !important;
+  }
+
+  .gallery-title {
+    font-size: 3rem;
+  }
+}
+
+/* pages */
+.page-container {
+  display: flex;
+  justify-content: center;
+  padding: 60px 20px;
+}
+
+/* cards */
+.card {
+  width: 100%;
+  max-width: 600px;
+  background: white;
+  padding: 40px;
+  border-radius: 16px;
+  box-shadow: 0 6px 25px rgba(0, 0, 0, 0.12);
+}
+
+/* head */
+.card h2 {
+  text-align: center;
+  margin-bottom: 20px;
+  font-family: "Amatic SC", cursive;
+}
+
+/* form */
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  max-width: 500px;
+  margin: 0 auto;
+}
+
+/* input / textarea */
+form input,
+form select,
+form textarea {
+  width: 100%;
+  padding: 10px;
+  border-radius: 8px;
+  border: 1px solid #ddd;
+  font-family: "Amatic SC", cursive;
+  font-size: 1.4rem;
+}
+
+/* Unified Button Style */
+button,
+.form button {
+  background-color: #7fffd4;
+  color: #333;
+  border: none;
+  padding: 12px 18px;
+  border-radius: 12px;
+  font-size: 1.6rem;
+  font-family: "Amatic SC", cursive;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+  background: linear-gradient(135deg, #7fffd4, #66e0cc);
+}
+
+button:hover,
+.form button:hover {
+  background-color: #20b2aa;
+  color: white;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15);
+}
+
+button:active,
+.form button:active {
+  transform: translateY(0px);
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+form label {
+  text-align: left;
+  font-size: 1.6rem;
+  margin-bottom: -8px;
+}

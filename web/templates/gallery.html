@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gallery - Second-Look Pet Adoption</title>
+    <link href="https://fonts.googleapis.com/css2?family=Amatic+SC:wght@400;700&display=swap" rel="stylesheet">
+    <link href="{{ url_for('static', filename='styles/styles.css') }}" rel="stylesheet" />
+</head>
+<body>
+
+    <header class="navbar">
+        <div class="logo">
+            <a href="{{ url_for('home.index') }}">Second-Look Adoptions</a>
+        </div>
+        <nav class="nav-links">
+            <a href="{{ url_for('home.index') }}">Home</a>
+            <a href="{{ url_for('home.gallery') }}">Gallery</a>
+            <a href="{{ url_for('home.adopt') }}">Adopt</a>
+            <a href="{{ url_for('home.form') }}">Forms</a>
+            <a href="{{ url_for('home.contact') }}">Contact</a>
+        </nav>
+    </header>
+
+    <main class="gallery-wrapper">
+        <h1 class="gallery-title">Our Furry Friends</h1>
+        
+        <div class="gallery-container">
+            {% for animal in animals %}
+                <div class="gallery-card">
+                    
+                    <div class="card-image" 
+                        style="background-image: url('{{ animal.primary_image }}');">
+                        
+                        <div class="name-overlay">
+                            <h2>{{ animal.name }}</h2>
+                        </div>
+                    </div>
+                    
+                    <div class="card-details">
+                        <div class="details-header">
+                            <h3>{{ animal.name }}</h3>
+                        </div>
+                        <div class="details-body">
+                            <p><strong>Breed:</strong> {{ animal.breed }}</p>
+                            <p><strong>Gender:</strong> {{ animal.gender }}</p>
+                        </div>
+                    </div>
+
+                </div>
+            {% endfor %}
+        </div>
+
+    </main>
+
+    <footer>
+        <p>&copy; 2026 Second-Look Pet Adoption</p>
+    </footer>
+
+</body>
+</html>
