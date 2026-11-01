@@ -1,0 +1,69 @@
+name: E2E tests
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  e2e:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    env:
+      # Without this, Python buffers output to server.log and a crash can
+      # leave the log empty.
+      PYTHONUNBUFFERED: "1"
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@v6
+        with:
+          enable-cache: true
+
+      - name: Install Python (version from .python-version)
+        run: uv python install
+
+      - name: Install dependencies
+        run: uv sync --locked
+
+      - name: Install Playwright Chromium
+        run: uv run playwright install --with-deps chromium
+
+      - name: Create a fresh database
+        run: |
+          # instance/ is not in git (shelter.db is ignored), so create it.
+          mkdir -p instance
+          rm -f instance/shelter.db
+          uv run python seed.py
+
+      - name: Start Flask app in the background
+        # Not "python run.py": its debug=True starts the reloader (two
+        # processes, restarts on file changes). This serves the same app
+        # object with one process and no debugger.
+        run: |
+          uv run flask --app run:app run --host 127.0.0.1 --port 5001 > server.log 2>&1 &
+
+      - name: Wait for the app to answer
+        run: |
+          for i in $(seq 1 30); do
+            if curl -sf http://127.0.0.1:5001/ | grep -q "Second-Look"; then
+              echo "App is up after ${i}s"
+              exit 0
+            fi
+            sleep 1
+          done
+          echo "::error::Flask app did not answer at http://127.0.0.1:5001/ within 30s. Server log:"
+          cat server.log
+          exit 1
+
+      - name: Run E2E tests
+        run: uv run pytest tests/e2e -rA
+
+      - name: Upload server log
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: server-log
+          path: server.log
+          if-no-files-found: warn
